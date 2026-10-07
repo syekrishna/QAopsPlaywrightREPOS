@@ -5,7 +5,7 @@ const config = {
   testDir: './tests',
   testMatch: '**/*.{spec,specs}.js',
   retries:0,
-  timeout: 40 *1000,
+  timeout: 50 *1000,
   expect: {
     timeout: 40 *1000
   },

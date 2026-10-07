@@ -12,13 +12,13 @@
 # Error details
 
 ```
-Test timeout of 40000ms exceeded.
+Test timeout of 50000ms exceeded.
 ```
 
 ```
-Error: locator.waitFor: Test timeout of 40000ms exceeded.
+Error: locator.waitFor: Test timeout of 50000ms exceeded.
 Call log:
-  - waiting for locator('.ta-results button').first() to be visible
+  - waiting for locator('h3').filter({ hasText: 'iphone 13 pro' }) to be visible
 
 ```
 
@@ -47,138 +47,44 @@ Call log:
           - generic [ref=e18]: 
           - text: ORDERS
       - listitem [ref=e19] [cursor=pointer]:
-        - button " Cart 1" [ref=e20]:
+        - button " Cart" [ref=e20]:
           - generic [ref=e21]: 
           - text: Cart
-          - generic [ref=e22]: "1"
-      - listitem [ref=e23] [cursor=pointer]:
-        - button "Sign Out" [ref=e24]:
-          - generic [ref=e25]: 
+      - listitem [ref=e22] [cursor=pointer]:
+        - button "Sign Out" [ref=e23]:
+          - generic [ref=e24]: 
           - text: Sign Out
-  - generic [ref=e28]:
-    - generic [ref=e32]:
-      - generic [ref=e33]: iphone 13 pro
-      - generic [ref=e34]: $ 55000
-      - generic [ref=e35]: "Quantity: 1"
-      - list [ref=e37]:
-        - listitem [ref=e38]: Apple phone
-    - generic [ref=e41]:
-      - generic [ref=e42]: Payment Method
-      - generic [ref=e43]:
-        - generic [ref=e44] [cursor=pointer]: Credit Card
-        - generic [ref=e45] [cursor=pointer]: Paypal
-        - generic [ref=e46] [cursor=pointer]: SEPA
-        - generic [ref=e47] [cursor=pointer]: Invoice
-      - generic [ref=e48]:
-        - generic [ref=e49]:
-          - generic [ref=e50]: Personal Information
-          - generic [ref=e52]:
-            - generic [ref=e54]:
-              - generic [ref=e55]: Credit Card Number
-              - textbox [ref=e56]: 4542 9931 9292 2293
-            - generic [ref=e57]:
-              - generic [ref=e58]:
-                - generic [ref=e59]: Expiry Date
-                - combobox [ref=e60]:
-                  - option "01" [selected]
-                  - option "02"
-                  - option "03"
-                  - option "04"
-                  - option "05"
-                  - option "06"
-                  - option "07"
-                  - option "08"
-                  - option "09"
-                  - option "10"
-                  - option "11"
-                  - option "12"
-                - combobox [ref=e61]:
-                  - option "01"
-                  - option "02"
-                  - option "03"
-                  - option "04"
-                  - option "05"
-                  - option "06"
-                  - option "07"
-                  - option "08"
-                  - option "09"
-                  - option "10"
-                  - option "11"
-                  - option "12"
-                  - option "13"
-                  - option "14"
-                  - option "15"
-                  - option "16" [selected]
-                  - option "17"
-                  - option "18"
-                  - option "19"
-                  - option "20"
-                  - option "21"
-                  - option "22"
-                  - option "23"
-                  - option "24"
-                  - option "25"
-                  - option "26"
-                  - option "27"
-                  - option "28"
-                  - option "29"
-                  - option "30"
-                  - option "31"
-              - generic [ref=e62]:
-                - generic [ref=e63]: CVV Code ?
-                - textbox [ref=e64]
-            - generic [ref=e66]:
-              - generic [ref=e67]: Name on Card
-              - textbox [ref=e68]
-            - generic [ref=e69]:
-              - generic [ref=e70]:
-                - generic [ref=e71]: Apply Coupon
-                - textbox [ref=e72]
-              - button "Apply Coupon" [ref=e75] [cursor=pointer]
-        - generic [ref=e76]:
-          - generic [ref=e77]: Shipping Information
-          - generic [ref=e79]:
-            - generic [ref=e80]: saikrishnareddy@gmail.com
-            - textbox [ref=e81]: saikrishnareddy@gmail.com
-            - textbox "Select Country" [active] [ref=e84]: India
-            - generic [ref=e85]: Place Order
+  - generic [ref=e25]:
+    - generic [ref=e26]:
+      - heading "My Cart" [level=1] [ref=e27]
+      - button "Continue Shopping❯" [ref=e28] [cursor=pointer]
+    - heading "No Products in Your Cart !" [level=1] [ref=e30]
 ```
 
 # Test source
 
 ```ts
-  1  | export class CheckoutPage {
+  1  | export class CartPage {
   2  |     page;
-  3  |     countryInput;
-  4  |     countryDropdown;
-  5  |     userName;
-  6  |     placeOrderButton;
-  7  |     constructor(page) {
-  8  |         this.page = page;
-  9  |         this.countryInput = page.locator("[placeholder*=Country]");
-  10 |         this.countryDropdown = page.locator(".ta-results button");
-  11 |         this.userName = page.locator(".user__name [type='text']").first();
-  12 |         this.placeOrderButton = page.locator("a:has-text('PLACE ORDER')");
-  13 |     }
-  14 |     async selectCountry(country) {
-  15 |         await this.countryInput.fill(country);
-> 16 |         await this.countryDropdown.first().waitFor();
-     |                                            ^ Error: locator.waitFor: Test timeout of 40000ms exceeded.
-  17 |         await this.countryDropdown.last().click();
-  18 |     }
-  19 |     async verifyUserName(username) {
-  20 |         await this.page.waitForSelector(".user__name [type='text']");
-  21 |     }
-  22 |     async placeOrder() {
-  23 |         await this.placeOrderButton.click();
-  24 |     }
-  25 |     async getOrderId() {
-  26 |         const orderId = await this.page
-  27 |             .locator(".em-spacer-1 .ng-star-inserted")
-  28 |             .first()
-  29 |             .textContent();
-  30 |         return orderId?.trim() ?? "";
-  31 |     }
-  32 | }
-  33 | 
+  3  |     cartItems;
+  4  |     checkoutButton;
+  5  |     constructor(page) {
+  6  |         this.page = page;
+  7  |         this.cartItems = page.locator("div li");
+  8  |         this.checkoutButton = page.locator("button").filter({
+  9  |             hasText: "Checkout"
+  10 |         });
+  11 |     }
+  12 |     async verifyProduct(productName) {
+  13 |         const product = this.page.locator("h3", {
+  14 |             hasText: productName
+  15 |         });
+> 16 |         await product.waitFor();
+     |                       ^ Error: locator.waitFor: Test timeout of 50000ms exceeded.
+  17 |     }
+  18 |     async checkout() {
+  19 |         await this.checkoutButton.click();
+  20 |     }
+  21 | }
+  22 | 
 ```
