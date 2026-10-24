@@ -37,7 +37,7 @@ test('@Web Download-upload',async({page})=>{
     const DownloadPromise =  page.waitForEvent("download");
     await page.getByRole('button',{name:'Download'}).click();
     await DownloadPromise;
-   await  WriteExcel("Mango","499",{rowChange:0,colChange:2},"C:/Users/syekr/Downloads/download.xlsx");
+    await  WriteExcel("Mango","499",{rowChange:0,colChange:2},"C:/Users/syekr/Downloads/download.xlsx");
     await page.locator("#fileinput").click();
     await page.locator("#fileinput").setInputFiles("C:/Users/syekr/Downloads/download.xlsx");
     await expect(page.getByText("499")).toBeVisible();
