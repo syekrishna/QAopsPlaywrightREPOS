@@ -12,6 +12,7 @@ test ('@Web calender Demo',async({page})=>
     await page.getByText(Year).click();
     await page.locator(".react-calendar__tile").nth(Number(Month)-1).click();
     //Xpath locator for Date field
+    //Calender App demo
     await page.locator("//abbr[text()='"+Date+"']").click();
 
     const inputs =  page.locator('.react-date-picker__inputGroup__input')
