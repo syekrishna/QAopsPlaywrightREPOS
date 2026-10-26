@@ -11,7 +11,7 @@ test ('@Web calender Demo',async({page})=>
     await page.locator(".react-calendar__navigation__label").click();
     await page.getByText(Year).click();
     await page.locator(".react-calendar__tile").nth(Number(Month)-1).click();
-    //Xpath locator for Date field
+    //Xpath locator for Date field check
     //Calender App demo
     await page.locator("//abbr[text()='"+Date+"']").click();
 
